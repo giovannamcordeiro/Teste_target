@@ -7,25 +7,20 @@
 import json
 
 with open('faturamento.json', 'r') as file:
-    faturamento_diario = json.load(file)
+    faturamento = json.load(file)
 
+faturamento_filtrado = [dia['valor'] for dia in faturamento if dia['valor'] > 0]
 
-faturamento_valores = [dia["valor"] for dia in faturamento_diario if dia["valor"] > 0]
+menor_faturamento = min(faturamento_filtrado)
+maior_faturamento = max(faturamento_filtrado)
 
+media_mensal = sum(faturamento_filtrado) / len(faturamento_filtrado)
 
-menor_faturamento = min(faturamento_valores)
-maior_faturamento = max(faturamento_valores)
+dias_acima_da_media = len([valor for valor in faturamento_filtrado if valor > media_mensal])
 
-
-media_faturamento = sum(faturamento_valores) / len(faturamento_valores)
-
-
-superior_media = len([valor for valor in faturamento_valores if valor > media_faturamento])
-
-
-print(f"Menor valor de faturamento: {menor_faturamento:.2f}")
-print(f"Maior valor de faturamento: {maior_faturamento:.2f}")
-print(f"Número de dias com faturamento acima da média: {superior_media}")
+print(f"Menor valor de faturamento: R${menor_faturamento:.2f}")
+print(f"Maior valor de faturamento: R${maior_faturamento:.2f}")
+print(f"Número de dias com faturamento acima da média: {dias_acima_da_media}")
 
 
 
